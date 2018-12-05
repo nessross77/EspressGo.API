@@ -11,21 +11,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// const db = knex({
-//     client: 'pg', //Postgresql 
-//     connection: {
-//       host : '127.0.0.1', // localhost for development
-//       user : '', 
-//       password : '',
-//       database : 'test'
-//     }
-//   });
+const db = knex({
+    client: 'pg', 
+    connection: {
+      host : process.env.DATABASE_URL,
+      ssl: true
+    }
+  });
 
-//   app.post('/signin',(req,res) => {signin.handleSignin(req,res ,db ,bcrypt)})
+  app.post('/signin',(req,res) => {signin.handleSignin(req,res ,db ,bcrypt)})
 
-//   app.post('/register',(req,res) => {register.handleRegistration(req,res ,db ,bcrypt)})
+  app.post('/register',(req,res) => {register.handleRegistration(req,res ,db ,bcrypt)})
   
-//   app.get('/profile/:id',(req,res) => {profile.handleProfile(req,res,db)})
+  app.get('/profile/:id',(req,res) => {profile.handleProfile(req,res,db)})
 
 app.listen(process.env.PORT || 3000, () =>{
      console.log(`app is running on port ${process.env.PORT}`);
